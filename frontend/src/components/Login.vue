@@ -46,7 +46,7 @@ export default {
       this.$refs.img.style.filter='Blur(0px)';
     },
     login(){
-      this.$router.push({path:'/StudentMain'})
+      this.$router.push({path:'/examPaper'})
     }
   },
   mounted() {
