@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Login from '../components/Login.vue'
 import StudentMain from '../components/student/StudentMain'
 import ExamPaper from '../components/student/ExamPaper'
+import AllScore from '../components/student/AllScore'
 Vue.use(VueRouter)
 
 const routes = [
@@ -24,6 +25,11 @@ const routes = [
   path:'/ExamPaper',
   name:'ExamPaper',
   component:ExamPaper
+},
+{
+  path:'/AllScore',
+  name:'AllScore',
+  component:AllScore
 },
 ]
 
