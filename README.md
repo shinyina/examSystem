@@ -11,12 +11,10 @@
 
 ### 命名规范
 
-**严格按照驼峰命名**
-
 * exam
 
 * examPaper
-* Exampaper
+* ExamPaper
 
 ### 项目结构
 
