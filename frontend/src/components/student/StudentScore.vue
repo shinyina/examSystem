@@ -9,7 +9,7 @@
 					<span style=" font:20pt Courier; font-weight: 900;">
 						{{StudentScore.examName}}
 					</span>
-					<el-button id="back" type="primary">
+					<el-button id="back" type="primary" @click="back()">
 						返回
 					</el-button>
 				</div>
@@ -28,7 +28,7 @@
 							<th>姓名</th>
 							<th>用时</th>
 						</tr>
-				  <tr>
+						<tr>
 							<td>{{StudentScore.name}}</td>
 							<td>{{StudentScore.elapsedTime}}</td>
 						</tr>
@@ -54,6 +54,13 @@
 					totalScore: 100,
 				},
 			};
+		},
+		methods: {
+			back() {
+				this.$router.push({
+					path: '/examPaper'
+				})
+			}
 		},
 		components: {
 			StudentMain,

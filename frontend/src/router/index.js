@@ -12,6 +12,7 @@ import QuestionAdd from '../components/teacher/QuestionAdd'
 import QuestionBank from '../components/teacher/QuestionBank'
 import StudentAdd from '../components/teacher/StudentAdd'
 import TeacherHeader from '../components/teacher/TeacherHeader'
+
 Vue.use(VueRouter)
 
 const routes = [

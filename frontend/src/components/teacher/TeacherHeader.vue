@@ -1,6 +1,6 @@
 <template>
   <el-row class="header">
-    <el-col span="6" style="line-height:10vh">在线考试系统教师管理界面</el-col>
+    <el-col span="10" style="line-height:10vh">在线考试系统教师管理界面</el-col>
   </el-row>
 </template>
 
