@@ -5,6 +5,7 @@
       <el-col span="3">
         <NavMenu></NavMenu>
       </el-col>
+      题库管理
       <el-col span="18">
         <el-table :data="tableData" style="width: 100%">
           <el-table-column prop="date" label="日期" width="180">

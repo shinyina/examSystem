@@ -9,19 +9,20 @@
         @close="handleClose"
         background-color="#11427f"
         text-color="#fff"
+        router="true"
         active-text-color="#ffd04b"
       >
-        <el-menu-item index="1">
+        <el-menu-item index="ExamAdd">
           <i class="el-icon-location"></i>
           <span slot="title"> 考试管理</span>
         </el-menu-item>
 
-        <el-menu-item index="2">
+        <el-menu-item index="QuestionBank">
           <i class="el-icon-menu"></i>
           <span slot="title"> 题库管理</span>
         </el-menu-item>
 
-        <el-menu-item index="4">
+        <el-menu-item index="StudentAdd">
           <i class="el-icon-setting"></i>
           <span slot="title"> 学生管理</span>
         </el-menu-item>
