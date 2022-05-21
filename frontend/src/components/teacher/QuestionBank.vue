@@ -20,7 +20,7 @@
 					<el-table-column label="操作" min-width="25%">
 						<template slot-scope="scope">
 							<el-button type="primary" class="edit" @click="dialogFormEditVisible=true">编辑</el-button>
-
+							<el-button type="success" @click="run()">查 看</el-button>
 							<el-button type="danger" class="delete"
 								@click.native.prevent="deleteRow(scope.$index, tableData)">删除</el-button>
 						</template>
@@ -108,6 +108,9 @@
 			}
 		},
 		methods: {
+			run(){
+				this.$router.push('/QuestionAdd')
+			},
 			add() {
 				this.$router.push({
 					path: '/QuestionAdd'
