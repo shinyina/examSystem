@@ -28,6 +28,7 @@
                 </div>
               </div> -->
 					</el-form>
+					<el-button type="info" @click="aaaa()">临时按钮，点此进入后台</el-button>
 				</div>
 			</div>
 		</el-card>
@@ -41,6 +42,7 @@
 			}
 		},
 		methods: {
+			aaaa(){this.$router.push('/ExamAdd')},//临时
 			inputFocus() {
 				this.$refs.img.style.filter = 'Blur(5px)';
 			},

@@ -38,12 +38,13 @@
                   >{{ index + 1 }}</el-button
                 >
               </div>
+              <el-button type="primary" style="margin:50px auto;display: block;" @click="submit()">结束考试</el-button>
             </el-card></el-col
           >
           <el-col span="16"
             ><el-card class="right">
               <div class="questionDetail">
-                <h3>第{{nowIndex}}题{{ nowContent }}</h3>
+                <h3>第{{nowIndex}}题.{{ nowContent }}</h3>
                 <li>
                   <el-button
                     round
@@ -186,7 +187,8 @@ export default {
   },
   methods: {
     bottonType(index) {
-      return "primary";
+      if(this.selectAbout[index].choice!=='')
+      return 'primary'
     },
     log() {
       console.log(this.selectAbout);
@@ -228,7 +230,19 @@ export default {
       if(choice=='D')
       this.selectButton.splice(3,1,'primary')
     },
+    submit(){
+      this.$router.push('/StudentScore')
+    }
   },
+  mounted(){
+    this.nowIndex=1;
+      this.nowId = this.paper[0].id;
+      this.nowContent = this.paper[0].content;
+      this.nowA = this.paper[0].choice.A;
+      this.nowB = this.paper[0].choice.B;
+      this.nowC = this.paper[0].choice.C;
+      this.nowD = this.paper[0].choice.D;
+  }
 };
 </script>
 
