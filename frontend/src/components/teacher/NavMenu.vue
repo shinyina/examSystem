@@ -3,14 +3,11 @@
   <el-row class="tac">
     <el-col>
       <el-menu
-        default-active="2"
+        :default-active="$route.path"
         class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
         background-color="#11427f"
         text-color="#fff"
         router="true"
-        active-text-color="#ffd04b"
       >
         <el-menu-item index="ExamAdd">
           <i class="el-icon-location"></i>

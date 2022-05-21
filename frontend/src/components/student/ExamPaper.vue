@@ -25,7 +25,7 @@
               <li style="width:70px"><b>试卷总分</b></li>
               <li>{{ item.totalScore }}分</li>
             </ul>
-            <el-button type="primary">开始考试</el-button>
+            <el-button type="primary" @click="startExam(item.id)">开始考试</el-button>
           </div>
         </el-card>
       </el-col>
@@ -46,6 +46,7 @@ export default {
           time: "2022-5-15",
           examTime: 90,
           totalScore: 100,
+          type:1,
         },
          {
           id: 2,
@@ -53,9 +54,16 @@ export default {
           description: "teteteteteteets哇哇哇",
           examTime: 90,
           totalScore: 100,
+          type:2,
         },
       ],
     };
+  },
+  methods:{
+    startExam(id){
+      console.log(1);
+      this.$router.push({path:'/PaperDetail',query:{id:id}})
+    }
   },
   components: {
     StudentMain,

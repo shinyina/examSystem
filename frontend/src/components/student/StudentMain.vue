@@ -6,7 +6,6 @@
       :default-active="$route.path"
       class="el-menu-demo"
       mode="horizontal"
-      @select="handleSelect"
       router="true"
     >
       <el-menu-item index="/ExamPaper" >我的考试</el-menu-item>
