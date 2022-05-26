@@ -1,0 +1,23 @@
+server:
+  port: 9090
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://43.142.18.70:3306/gramsystem?serverTimezone=GMT%2b8
+    username: root
+    password: root
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+files:
+  upload:
+    path:/home/files/
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #?????SQL??,????
