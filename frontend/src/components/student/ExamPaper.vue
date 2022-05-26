@@ -63,7 +63,15 @@ export default {
     startExam(id){
       console.log(1);
       this.$router.push({path:'/PaperDetail',query:{id:id}})
+    },
+    getPaper(){
+      this.axios.get('http://43.142.18.70:9090/ExamPaper').then(res=>{
+        this.tableData=res.data.data
+      })
     }
+  },
+  mounted(){
+    this.getPaper()
   },
   components: {
     StudentMain,

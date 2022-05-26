@@ -26,7 +26,10 @@ export default {
     },
     methods:{
         
-    }
+    },
+    mounted() {
+      this.userName=sessionStorage.getItem('nickname')
+    },
 };
 </script>
 
