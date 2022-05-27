@@ -25,7 +25,7 @@
               <li style="width:70px"><b>试卷总分</b></li>
               <li>{{ item.totalScore }}分</li>
             </ul>
-            <el-button type="primary" @click="startExam(item.id)">开始考试</el-button>
+            <el-button type="primary" @click="startExam(item.id,item.name)">开始考试</el-button>
           </div>
         </el-card>
       </el-col>
@@ -60,9 +60,9 @@ export default {
     };
   },
   methods:{
-    startExam(id){
+    startExam(id,name){
       console.log(1);
-      this.$router.push({path:'/PaperDetail',query:{id:id}})
+      this.$router.push({path:'/PaperDetail',query:{id:id,name}})
     },
     getPaper(){
       this.axios.get('http://43.142.18.70:9090/ExamPaper').then(res=>{

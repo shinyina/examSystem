@@ -56,7 +56,7 @@
               <el-button
                 type="danger"
                 class="delete"
-                @click.native.prevent="deleteRow(scope.$index, tableData)"
+                @click.native.prevent="deleteRow(scope.row.id)"
                 >删除</el-button
               >
             </template>
@@ -68,24 +68,42 @@
             >添加</el-button
           >
           <el-dialog title="添加题目" :visible.sync="dialogFormVisible">
-            <el-form :model="form">
+            <el-form>
               <el-form-item label="题目内容:" :label-width="formLabelWidth">
-                <el-input v-model="form.question" autocomplete="off"></el-input>
+                <el-input
+                  v-model="questionAdd.content"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
               <el-form-item label="选项A:" :label-width="formLabelWidth">
-                <el-input v-model="form.optionA" autocomplete="off"></el-input>
+                <el-input
+                  v-model="questionAdd.choice1"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
               <el-form-item label="选项B:" :label-width="formLabelWidth">
-                <el-input v-model="form.optionB" autocomplete="off"></el-input>
+                <el-input
+                  v-model="questionAdd.choice2"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
               <el-form-item label="选项C:" :label-width="formLabelWidth">
-                <el-input v-model="form.optionC" autocomplete="off"></el-input>
+                <el-input
+                  v-model="questionAdd.choice3"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
               <el-form-item label="选项D:" :label-width="formLabelWidth">
-                <el-input v-model="form.optionD" autocomplete="off"></el-input>
+                <el-input
+                  v-model="questionAdd.choice4"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
               <el-form-item label="题目答案:" :label-width="formLabelWidth">
-                <el-input v-model="form.answer" autocomplete="off"></el-input>
+                <el-input
+                  v-model="questionAdd.answer"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -103,24 +121,42 @@
         </div>
         <div id="edit">
           <el-dialog title="编辑题目" :visible.sync="dialogFormEditVisible">
-            <el-form :model="form">
+            <el-form>
               <el-form-item label="题目内容:" :label-width="formLabelWidth">
-                <el-input v-model="form.question" autocomplete="off"></el-input>
+                <el-input
+                  v-model="nowEdit.content"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
               <el-form-item label="选项A:" :label-width="formLabelWidth">
-                <el-input v-model="form.optionA" autocomplete="off"></el-input>
+                <el-input
+                  v-model="nowEdit.choice1"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
               <el-form-item label="选项B:" :label-width="formLabelWidth">
-                <el-input v-model="form.optionB" autocomplete="off"></el-input>
+                <el-input
+                  v-model="nowEdit.choice2"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
               <el-form-item label="选项C:" :label-width="formLabelWidth">
-                <el-input v-model="form.optionC" autocomplete="off"></el-input>
+                <el-input
+                  v-model="nowEdit.choice3"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
               <el-form-item label="选项D:" :label-width="formLabelWidth">
-                <el-input v-model="form.optionD" autocomplete="off"></el-input>
+                <el-input
+                  v-model="nowEdit.choice4"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
               <el-form-item label="题目答案:" :label-width="formLabelWidth">
-                <el-input v-model="form.answer" autocomplete="off"></el-input>
+                <el-input
+                  v-model="nowEdit.answer"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -154,8 +190,8 @@ export default {
 
   data() {
     return {
-      questionAdd:{},
-      nowEdit:{},
+      questionAdd: {},
+      nowEdit: {},
       tableData: [],
       dialogFormVisible: false,
       dialogFormEditVisible: false,
@@ -175,26 +211,68 @@ export default {
     };
   },
   methods: {
-    add() {},
+    add() {
+      this.dialogFormVisible = false;
+      this.axios({
+        url: `http://43.142.18.70:9090/QuestionAdd/${this.$route.query.id}`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: JSON.stringify(this.questionAdd),
+      }).then((res) => {
+        console.log(res);
+        if (res.data.code == 200) {
+          this.$message.success("添加成功");
+          this.getQuestion();
+        } else {
+          this.$message.error("添加失败");
+        }
+      });
+    },
 
-    deleteRow(index, rows) {
-      rows.splice(index, 1);
+    deleteRow(id) {
+      this.axios
+        .delete(
+          `http://43.142.18.70:9090/QuestionDel/${this.$route.query.id}/${id}`
+        )
+        .then((res) => {
+          if (res.data.code == 200) {
+            this.$message.success("删除成功");
+            this.getQuestion();
+          } else this.$message.error("删除失败");
+        });
     },
 
     showEidtView(data) {
-      Object.assign(this.form, data);
+      this.nowEdit = data;
     },
 
-    edit() {},
+    edit() {
+      this.axios({
+        url: `http://43.142.18.70:9090/QuestionAdd/${this.$route.query.id}`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: JSON.stringify(this.nowEdit),
+      }).then((res) => {
+        console.log(res);
+        if (res.data.code == 200) {
+          this.$message.success("修改成功");
+          this.getQuestion();
+        } else {
+          this.$message.error("修改失败");
+        }
+      });
+    },
     getQuestion() {
-      this.axios.get(`http://43.142.18.70:9090/QuestionAdd/${this.$route.query.id}`).then(res=>{
-        this.tableData=res.data.data
-        console.log(this.tableData);
-      })
+      this.axios
+        .get(`http://43.142.18.70:9090/QuestionAdd/${this.$route.query.id}`)
+        .then((res) => {
+          this.tableData = res.data.data;
+          console.log(this.tableData);
+        });
     },
   },
   mounted() {
-    this.getQuestion()
+    this.getQuestion();
   },
 };
 </script>

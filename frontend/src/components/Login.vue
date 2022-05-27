@@ -70,6 +70,7 @@ export default {
 		  {
 		  this.$message.success('登录成功')
 		  sessionStorage.setItem('nickname',res.data.data.nickname)
+      sessionStorage.setItem('uid',res.data.data.id)
 		  if(sessionStorage.getItem('nickname')=='teacher')
 		  this.$router.push('/ExamAdd')
 		  else if (sessionStorage.getItem('nickname'))

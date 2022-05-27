@@ -13,9 +13,9 @@
 						返回
 					</el-button>
 				</div>
-				<p id="score">{{StudentScore.score}}分</p>
+				<p id="score">{{StudentScore.score}}/{{StudentScore.totalScore}}分</p>
 				<div id="tishiyu">
-					<p v-if="StudentScore.score>=StudentScore.score*0.6">
+					<p v-if="StudentScore.score>=StudentScore.totalScore*0.6">
 						恭喜你通过本次考试！
 					</p>
 					<p v-else>
@@ -48,10 +48,9 @@
 				StudentScore: {
 					name: " 陈益章",
 					examName: "计算机导论",
-					score: 80,
+					score: undefined,
 					elapsedTime: "66分钟",
-					examTime: 90,
-					totalScore: 100,
+					totalScore:undefined ,
 				},
 			};
 		},
@@ -65,6 +64,12 @@
 		components: {
 			StudentMain,
 		},
+		mounted(){
+			this.StudentScore.name=sessionStorage.getItem('nickname')
+			this.StudentScore.examName=this.$route.query.examName
+			this.StudentScore.score=this.$route.query.score
+			this.StudentScore.totalScore=this.$route.query.total
+		}
 	};
 </script>
 

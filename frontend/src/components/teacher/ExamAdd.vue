@@ -14,30 +14,31 @@
           :cell-style="{ 'text-align': 'center' }"
           style="width: 100%"
         >
+          <el-table-column prop="id" label="id" width="10%"></el-table-column>
           <el-table-column prop="name" label="试卷名称" min-width="14.2%">
           </el-table-column>
-          <el-table-column prop="detail" label="试卷详情" min-width="14.2%">
+          <el-table-column
+            prop="description"
+            label="试卷详情"
+            min-width="14.2%"
+          >
           </el-table-column>
-          <el-table-column prop="time" label="考试时间" min-width="14.2%">
+          <el-table-column prop="quesnum" label="题目数量" min-width="14.2%">
           </el-table-column>
-          <el-table-column prop="score" label="试卷总分" min-width="14.2%">
-          </el-table-column>
-          <el-table-column prop="status" label="试卷状态" min-width="14.2%">
-          </el-table-column>
-          <el-table-column prop="bank" label="选用题库" min-width="14.2%">
+          <el-table-column prop="bankname" label="选用题库" min-width="14.2%">
           </el-table-column>
           <el-table-column label="操作" min-width="14.2%">
             <template slot-scope="scope">
               <el-button
                 type="primary"
                 class="edit"
-                @click="dialogFormEditVisible = true"
+                @click="handlerEdit(scope.row)"
                 >编辑</el-button
               >
               <el-button
                 type="danger"
                 class="delete"
-                @click.native.prevent="deleteRow(scope.$index, tableData)"
+                @click.native.prevent="deleteRow(scope.row.id)"
                 >删除</el-button
               >
             </template>
@@ -48,23 +49,27 @@
             >添加</el-button
           >
           <el-dialog title="添加考试" :visible.sync="dialogFormVisible">
-            <el-form :model="tableDate">
+            <el-form :model="examAdd">
               <el-form-item label="试卷名称:" :label-width="formLabelWidth">
-                <el-input v-model="name" autocomplete="off"></el-input>
+                <el-input v-model="examAdd.name" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="试卷详情:" :label-width="formLabelWidth">
-                <el-input v-model="detail" autocomplete="off"></el-input>
+                <el-input
+                  v-model="examAdd.description"
+                  autocomplete="off"
+                ></el-input>
               </el-form-item>
-              <el-form-item label="考试开始时间:" :label-width="formLabelWidth">
-                <el-input v-model="time" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="试卷总分:" :label-width="formLabelWidth">
-                <el-input v-model="score" autocomplete="off"></el-input>
-              </el-form-item>
+              <el-form-item label="题目数量" :label-width="formLabelWidth"
+                ><el-input v-model="examAdd.quesnum"></el-input
+              ></el-form-item>
               <el-form-item label="选用题库" :label-width="formLabelWidth">
-                <el-select v-model="form.region" style="width:100%">
-                  <el-option label="题库1" value="shanghai"></el-option>
-                  <el-option label="题库2" value="beijing"></el-option>
+                <el-select v-model="examAdd.bankname" style="width: 100%">
+                  <el-option
+                    v-for="item in allBank"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.name"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </el-form>
@@ -76,23 +81,27 @@
         </div>
         <div id="edit">
           <el-dialog title="编辑" :visible.sync="dialogFormEditVisible">
-            <el-form :model="form">
+            <el-form :model="nowEdit">
               <el-form-item label="试卷名称:" :label-width="formLabelWidth">
-                <el-input v-model="name" autocomplete="off"></el-input>
+                <el-input v-model="nowEdit.name" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="试卷详情:" :label-width="formLabelWidth">
-                <el-input v-model="detail" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="考试开始时间:" :label-width="formLabelWidth">
-                <el-input v-model="time" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="试卷总分:" :label-width="formLabelWidth">
-                <el-input v-model="score" autocomplete="off"></el-input>
-              </el-form-item>
+                <el-input
+                  v-model="nowEdit.description"
+                  autocomplete="off"
+                ></el-input>
+                </el-form-item>
+              <el-form-item label="题目数量" :label-width="formLabelWidth"
+                ><el-input v-model="nowEdit.quesnum"></el-input
+              ></el-form-item>
               <el-form-item label="选用题库" :label-width="formLabelWidth">
-                <el-select v-model="form.region" style="width:100%">
-                  <el-option label="题库1" value="shanghai"></el-option>
-                  <el-option label="题库2" value="beijing"></el-option>
+                <el-select v-model="nowEdit.bankname" style="width: 100%">
+                  <el-option
+                    v-for="item in allBank"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.name"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </el-form>
@@ -100,7 +109,7 @@
               <el-button @click="dialogFormEditVisible = false"
                 >取 消</el-button
               >
-              <el-button type="primary" @click="add()">确 定</el-button>
+              <el-button type="primary" @click="edit()">确 定</el-button>
             </div>
           </el-dialog>
         </div>
@@ -120,32 +129,10 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          name: "计算机导论",
-          detail: "导论",
-          time: "2022-5-20 12:00-14:00",
-          score: 100,
-          status: "未开始",
-          bank: "计算机导论",
-        },
-        {
-          name: "计算机导论",
-          detail: "导论",
-          time: "2022-5-20 12:00-14:00",
-          score: 100,
-          status: "未开始",
-          bank: "计算机导论",
-        },
-        {
-          name: "计算机导论",
-          detail: "导论",
-          time: "2022-5-20 12:00-14:00",
-          score: 100,
-          status: "未开始",
-          bank: "计算机导论",
-        },
-      ],
+      allBank: [],
+      nowEdit: {},
+      examAdd: {},
+      tableData: [],
       dialogFormVisible: false,
       dialogFormEditVisible: false,
 
@@ -159,19 +146,71 @@ export default {
     };
   },
   methods: {
+    handlerEdit(row){
+		  console.log(row);
+		  this.dialogFormEditVisible = true
+		  this.nowEdit=row
+	  },
     add() {
-      this.$router.push({
-        path: "/EaxmAdd",
+      this.dialogFormVisible = false;
+      this.axios({
+        url: `http://43.142.18.70:9090/ExamAdd`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: JSON.stringify(this.examAdd),
+      }).then((res) => {
+        console.log(res);
+        if (res.data.code == 200) {
+          this.$message.success("添加成功");
+          this.getExam();
+        } else {
+          this.$message.error("添加失败");
+        }
       });
     },
-    deleteRow(index, rows) {
-      rows.splice(index, 1);
+    deleteRow(id) {
+       this.axios
+        .delete(`http://43.142.18.70:9090/ExamDel/${id}`)
+        .then((res) => {
+          if (res.data.code == 200) {
+            this.$message.success("删除成功");
+            this.getExam()
+          } else this.$message.error("删除失败");
+        });
     },
     edit() {
-      this.$router.push({
-        path: "/ExamAdd",
+      this.dialogFormEditVisible = false;
+      this.axios({
+        url: "http://43.142.18.70:9090/ExamAdd",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: JSON.stringify(this.nowEdit),
+      }).then((res) => {
+		  console.log(res);
+        if(res.data.code==200)
+		{
+			this.$message.success('修改成功')
+			this.getExam()
+		}
+		else
+		{
+			this.$message.error('修改失败')
+		}
       });
     },
+    getExam() {
+      this.axios.get("http://43.142.18.70:9090/ExamPaper").then((res) => {
+        console.log(res.data);
+        this.tableData = res.data.data;
+      });
+    },
+  },
+  mounted() {
+    this.getExam();
+    this.axios.get("http://43.142.18.70:9090/QuestionBank").then((res) => {
+      this.allBank = res.data.data;
+      console.log(this.allBank);
+    });
   },
 };
 </script>

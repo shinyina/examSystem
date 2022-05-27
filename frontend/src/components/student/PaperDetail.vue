@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <el-button @click="log()"></el-button> -->
     <el-row>
       <el-col :span="4" class="logo"
         ><i class="el-icon-s-order"></i
@@ -38,13 +39,18 @@
                   >{{ index + 1 }}</el-button
                 >
               </div>
-              <el-button type="primary" style="margin:50px auto;display: block;" @click="submit()">结束考试</el-button>
+              <el-button
+                type="primary"
+                style="margin: 50px auto; display: block"
+                @click="submit()"
+                >结束考试</el-button
+              >
             </el-card></el-col
           >
           <el-col span="16"
             ><el-card class="right">
               <div class="questionDetail">
-                <h3>第{{nowIndex}}题.{{ nowContent }}</h3>
+                <h3>第{{ nowIndex }}题.{{ nowContent }}</h3>
                 <li>
                   <el-button
                     round
@@ -90,7 +96,8 @@
 export default {
   data() {
     return {
-        nowIndex:'',
+      temp: [],
+      nowIndex: "",
       nowId: "",
       nowContent: "",
       nowA: "",
@@ -99,150 +106,186 @@ export default {
       nowD: "",
       selectButton: ["", "", "", ""],
       selectAbout: [
-        {
-          id: 1,
-          choice: "",
-        },
-        {
-          id: 2,
-          choice: "",
-        },
-        {
-          id: 3,
-          choice: "",
-        },
-        {
-          id: 4,
-          choice: "",
-        },
-        {
-          id: 5,
-          choice: "",
-        },
-        {
-          id: 6,
-          choice: "",
-        },
-        {
-          id: 7,
-          choice: "",
-        },
-        {
-          id: 8,
-          choice: "",
-        },
-        {
-          id: 9,
-          choice: "",
-        },
+        // {
+        //   id: 1,
+        //   choice: "",
+        // },
+        // {
+        //   id: 2,
+        //   choice: "",
+        // },
+        // {
+        //   id: 3,
+        //   choice: "",
+        // },
+        // {
+        //   id: 4,
+        //   choice: "",
+        // },
+        // {
+        //   id: 5,
+        //   choice: "",
+        // },
+        // {
+        //   id: 6,
+        //   choice: "",
+        // },
+        // {
+        //   id: 7,
+        //   choice: "",
+        // },
+        // {
+        //   id: 8,
+        //   choice: "",
+        // },
+        // {
+        //   id: 9,
+        //   choice: "",
+        // },
       ],
       paper: [
-        {
-          id: 1,
-          content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-          choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
-        },
-        {
-          id: 2,
-          content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-          choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
-        },
-        {
-          id: 3,
-          content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-          choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
-        },
-        {
-          id: 4,
-          content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-          choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
-        },
-        {
-          id: 5,
-          content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-          choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
-        },
-        {
-          id: 6,
-          content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-          choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
-        },
-        {
-          id: 7,
-          content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-          choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
-        },
-        {
-          id: 8,
-          content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-          choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
-        },
-        {
-          id: 9,
-          content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-          choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
-        },
+        // {
+        //   id: 1,
+        //   content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
+        //   choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
+        // },
+        // {
+        //   id: 2,
+        //   content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
+        //   choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
+        // },
+        // {
+        //   id: 3,
+        //   content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
+        //   choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
+        // },
+        // {
+        //   id: 4,
+        //   content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
+        //   choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
+        // },
+        // {
+        //   id: 5,
+        //   content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
+        //   choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
+        // },
+        // {
+        //   id: 6,
+        //   content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
+        //   choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
+        // },
+        // {
+        //   id: 7,
+        //   content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
+        //   choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
+        // },
+        // {
+        //   id: 8,
+        //   content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
+        //   choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
+        // },
+        // {
+        //   id: 9,
+        //   content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
+        //   choice: { A: "哈哈", B: "啊啊", C: "66", D: "233" },
+        // },
       ],
     };
   },
   methods: {
     bottonType(index) {
-      if(this.selectAbout[index].choice!=='')
-      return 'primary'
+      if (this.selectAbout[index].answer !== "") return "primary";
     },
     log() {
-      console.log(this.selectAbout);
-      console.log(this.selectButton);
+      // console.log(this.selectAbout);
+      // console.log(this.selectButton);
+      console.log(this.paper[0]);
     },
     selectQuestion(index) {
-        this.nowIndex=index+1;
+      console.log(this.paper[0]);
+      this.nowIndex = index + 1;
       this.nowId = this.paper[index].id;
       this.nowContent = this.paper[index].content;
       this.nowA = this.paper[index].choice.A;
       this.nowB = this.paper[index].choice.B;
       this.nowC = this.paper[index].choice.C;
       this.nowD = this.paper[index].choice.D;
-      for (var i=0;i<4;i++)
-      this.selectButton.splice(i,1,'')
-      if (this.selectAbout[index].choice === "A")
+      for (var i = 0; i < 4; i++) this.selectButton.splice(i, 1, "");
+      if (this.selectAbout[index].answer === "A")
         this.selectButton.splice(0, 1, "primary");
-      if (this.selectAbout[index].choice === "B")
+      if (this.selectAbout[index].answer === "B")
         this.selectButton.splice(1, 1, "primary");
-      if (this.selectAbout[index].choice === "C")
+      if (this.selectAbout[index].answer === "C")
         this.selectButton.splice(2, 1, "primary");
-      if (this.selectAbout[index].choice === "D")
+      if (this.selectAbout[index].answer === "D")
         this.selectButton.splice(3, 1, "primary");
     },
     chooseAns(choice) {
       for (var i = 0; i < this.selectAbout.length; i++) {
         if (this.nowId === this.selectAbout[i].id) {
-          this.selectAbout[i].choice = choice;
+          this.selectAbout[i].answer = choice;
         }
       }
-      for (var i=0;i<4;i++)
-      this.selectButton.splice(i,1,'')
-      if(choice=='A')
-      this.selectButton.splice(0,1,'primary')
-      if(choice=='B')
-      this.selectButton.splice(1,1,'primary')
-      if(choice=='C')
-      this.selectButton.splice(2,1,'primary')
-      if(choice=='D')
-      this.selectButton.splice(3,1,'primary')
+      for (var i = 0; i < 4; i++) this.selectButton.splice(i, 1, "");
+      if (choice == "A") this.selectButton.splice(0, 1, "primary");
+      if (choice == "B") this.selectButton.splice(1, 1, "primary");
+      if (choice == "C") this.selectButton.splice(2, 1, "primary");
+      if (choice == "D") this.selectButton.splice(3, 1, "primary");
     },
-    submit(){
-      this.$router.push('/StudentScore')
-    }
+    submit() {
+      let submit={
+        allanswer:this.selectAbout,
+        papername:this.$route.query.name,
+        id_user:sessionStorage.getItem('uid')
+      }
+      console.log(JSON.stringify(submit));
+      this.axios({
+        url:'http://43.142.18.70:9090/StudentScore',
+        method:'POST',
+        headers:{ "Content-Type": "application/json" },
+        data:JSON.stringify(submit)
+      }).then(res=>{
+        this.$router.push({path:'/StudentScore',query:{score:res.data.data.score,total:res.data.data.total,exanName:this.$route.query.name}})
+      })
+    },
+    mountedSet() {
+      this.axios
+        .get(`http://43.142.18.70:9090/QuestionAdd/${this.$route.query.id}`)
+        .then((res) => {
+          for (let i = 0; i < res.data.data.length; i++) {
+            this.paper.push({
+              id: res.data.data[i].id,
+              content: res.data.data[i].content,
+              choice: {
+                A: res.data.data[i].choice1,
+                B: res.data.data[i].choice2,
+                C: res.data.data[i].choice3,
+                D: res.data.data[i].choice4,
+              },
+            });
+          }
+        });
+    },
+    setDefault() {
+      setTimeout(() => {
+        this.nowIndex = 1;
+        this.nowId = this.paper[0].id;
+        this.nowContent = this.paper[0].content;
+        this.nowA = this.paper[0].choice.A;
+        this.nowB = this.paper[0].choice.B;
+        this.nowC = this.paper[0].choice.C;
+        this.nowD = this.paper[0].choice.D;
+        for (let i = 0; i < this.paper.length; i++) {
+          console.log(this.paper[i]);
+          this.selectAbout.splice(i, 1, { id: this.paper[i].id, answer: "" });
+        }
+      }, 100);
+    },
   },
-  mounted(){
-    this.nowIndex=1;
-      this.nowId = this.paper[0].id;
-      this.nowContent = this.paper[0].content;
-      this.nowA = this.paper[0].choice.A;
-      this.nowB = this.paper[0].choice.B;
-      this.nowC = this.paper[0].choice.C;
-      this.nowD = this.paper[0].choice.D;
-  }
+  mounted() {
+    this.mountedSet();
+    this.setDefault();
+  },
 };
 </script>
 
