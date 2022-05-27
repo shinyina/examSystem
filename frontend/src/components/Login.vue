@@ -85,6 +85,14 @@ export default {
   },
   mounted() {
     this.$refs.main.style.height = document.documentElement.clientHeight + "px";
+    if(this.$route.query.error==1){
+      this.$message.error('没有权限')
+      this.$route.query.error=false
+    }
+    else if(this.$route.query.error==2)
+    {
+      this.$message.error('请先登录')
+    }
   },
 };
 </script>
