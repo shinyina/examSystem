@@ -9,13 +9,16 @@
 			</el-col>
 			<el-col span="18">
 				<el-table :data="tableData" :header-cell-style="{ 'text-align': 'center' }"
-					:cell-style="{ 'text-align': 'center' }" style="width: 100%">
-					<el-table-column prop="id" label="id" width="10%"></el-table-column>
+					:cell-style="{ 'text-align': 'center' }" style="width: 100%;height:85vh;overflow:auto">
+					<el-table-column prop="id" label="id" width="60px"></el-table-column>
 					<el-table-column prop="name" label="试卷名称" min-width="14.2%">
 					</el-table-column>
 					<el-table-column prop="description" label="试卷详情" min-width="14.2%">
 					</el-table-column>
 					<el-table-column prop="quesnum" label="题目数量" min-width="14.2%">
+					</el-table-column>
+          <el-table-column  label="考试时长(分钟)" prop="examtime" min-width="14.2%">
+            
 					</el-table-column>
 					<el-table-column prop="bankname" label="选用题库" min-width="14.2%">
 					</el-table-column>
@@ -42,7 +45,10 @@
 								<el-input v-model="examAdd.description" autocomplete="off"></el-input>
 							</el-form-item>
 							<el-form-item label="题目数量" :label-width="formLabelWidth">
-								<el-input v-model="examAdd.quesnum"></el-input>
+								<el-input v-model="examAdd.quesnum" placeholder="千万不能写超我懒得写判断了"></el-input>
+							</el-form-item>
+              <el-form-item label="考试时长(分钟)" :label-width="formLabelWidth">
+								<el-input v-model="examAdd.examtime"></el-input>
 							</el-form-item>
 							<el-form-item label="选用题库" :label-width="formLabelWidth">
 								<el-select v-model="examAdd.bankname" style="width: 100%">
@@ -67,7 +73,10 @@
 								<el-input v-model="nowEdit.description" autocomplete="off"></el-input>
 							</el-form-item>
 							<el-form-item label="题目数量" :label-width="formLabelWidth">
-								<el-input v-model="nowEdit.quesnum"></el-input>
+								<el-input v-model="nowEdit.quesnum" placeholder="千万不能写超我懒得写判断了"></el-input>
+							</el-form-item>
+              <el-form-item label="考试时长(分钟)" :label-width="formLabelWidth">
+								<el-input v-model="examAdd.examtime"></el-input>
 							</el-form-item>
 							<el-form-item label="选用题库" :label-width="formLabelWidth">
 								<el-select v-model="nowEdit.bankname" style="width: 100%">

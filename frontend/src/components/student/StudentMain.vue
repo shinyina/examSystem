@@ -1,7 +1,7 @@
 <template>
   <el-row>
       <el-col :span="4" class="logo"><i class="el-icon-s-order"></i><span class="title">在线考试系统</span></el-col>
-      <el-col :span="11">
+      <el-col :span="9">
     <el-menu
       :default-active="$route.path"
       class="el-menu-demo"
@@ -13,6 +13,7 @@
     </el-menu>
     </el-col>
     <el-col :span="2" class='user' offset="4"><i class="el-icon-user-solid">{{userName}}</i></el-col>
+    <el-col :span="2"><el-button type="info" style="transform: translateY(10px);" @click="logout()">注销账户</el-button></el-col>
   </el-row>
 </template>
 
@@ -25,7 +26,11 @@ export default {
         }
     },
     methods:{
-        
+        logout(){
+          sessionStorage.removeItem('nickname')
+          sessionStorage.removeItem('uid')
+          location.reload()
+        }
     },
     mounted() {
       this.userName=sessionStorage.getItem('nickname')
@@ -46,6 +51,7 @@ export default {
 .el-menu-demo{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .user{
     height: 61px;

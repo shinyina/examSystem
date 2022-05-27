@@ -9,13 +9,15 @@
 			</el-col>
 			<el-col span="18">
 				<el-table :data="tableData" :header-cell-style="{ 'text-align': 'center' }"
-					:cell-style="{ 'text-align': 'center' }" style="width: 100%">
+					:cell-style="{ 'text-align': 'center' }" style="width: 100%;height:85vh;overflow:auto">
 					<el-table-column prop="id" label="id" min-width="10%">
 					</el-table-column>
 					<el-table-column prop="name" label="题库名称" min-width="25%">
 					</el-table-column>
 
 					<el-table-column prop="description" label="题库详情" min-width="25%">
+					</el-table-column>
+					<el-table-column prop="total" label="题目数量" min-width="25%">
 					</el-table-column>
 					<el-table-column prop="buildtime" label="创建时间" min-width="25%">
 					</el-table-column>

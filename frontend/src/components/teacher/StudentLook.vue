@@ -8,8 +8,8 @@
 				<NavMenu> </NavMenu>
 			</el-col>
 			<el-col span="18">
-			<el-table :data="tableData" :header-cell-style="{ 'text-align': 'center' }"
-				:cell-style="{ 'text-align': 'center' }" style="width: 100%">
+			<el-table :data="tableData" :header-cell-style="{ 'text-align': 'center' }" 
+				:cell-style="{ 'text-align': 'center' }" style="width: 100%;height:85vh;overflow:auto">
 				<el-table-column prop="examtime" label="考试时间" min-width="20%"></el-table-column>
 				<el-table-column prop="papername" label="考试名称" min-width="20%"></el-table-column>
 				<el-table-column prop="score" label="得分" min-width="20%"></el-table-column>

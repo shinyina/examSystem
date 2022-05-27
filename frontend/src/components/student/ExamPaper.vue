@@ -15,17 +15,13 @@
             </ul>
             <ul>
               <li style="width:100px"><b>考试时间</b></li>
-              <li>{{ item.examTime }}分钟</li>
-            </ul>
-            <ul>
-              <li style="width:70px"><b>开考时间</b></li>
-              <li>{{ item.time }}</li>
+              <li>{{ item.examtime }}分钟</li>
             </ul>
             <ul>
               <li style="width:70px"><b>试卷总分</b></li>
-              <li>{{ item.totalScore }}分</li>
+              <li>{{ item.quesnum*5 }}分</li>
             </ul>
-            <el-button type="primary" @click="startExam(item.id,item.name)">开始考试</el-button>
+            <el-button type="primary" @click="startExam(item.id,item.name,item.examtime)">开始考试</el-button>
           </div>
         </el-card>
       </el-col>
@@ -39,30 +35,13 @@ export default {
   data() {
     return {
       tableData: [
-        {
-          id: 1,
-          name: "考试考试",
-          description: "teteteteteteetst",
-          time: "2022-5-15",
-          examTime: 90,
-          totalScore: 100,
-          type:1,
-        },
-         {
-          id: 2,
-          name: "考试考试sdadas",
-          description: "teteteteteteets哇哇哇",
-          examTime: 90,
-          totalScore: 100,
-          type:2,
-        },
       ],
     };
   },
   methods:{
-    startExam(id,name){
+    startExam(id,name,examtime){
       console.log(1);
-      this.$router.push({path:'/PaperDetail',query:{id:id,name}})
+      this.$router.push({path:'/PaperDetail',query:{id:id,name,examtime}})
     },
     getPaper(){
       this.axios.get('http://43.142.18.70:9090/ExamPaper').then(res=>{

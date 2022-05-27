@@ -9,11 +9,15 @@
 			</el-col>
 			<el-col span="18">
 				<el-table :data="tableData" :header-cell-style="{ 'text-align': 'center' }"
-					:cell-style="{ 'text-align': 'center' }" style="width: 100%">
+					:cell-style="{ 'text-align': 'center' }" style="width: 100%;height:85vh;overflow:auto">
 					<el-table-column prop="id" label="ID" min-width="20%"></el-table-column>
 					<el-table-column prop="nickname" label="姓名" min-width="20%"></el-table-column>
 					<el-table-column prop="username" label="用户名" min-width="20%"></el-table-column>
-					<el-table-column prop="password" label="密码" min-width="20%"> </el-table-column>
+					<el-table-column prop="password" label="密码" min-width="20%">
+						<template slot-scope="scope">
+							<el-input v-model="scope.row.password" show-password readonly></el-input>
+						</template>
+						</el-table-column>
 					<el-table-column label="操作" min-width="20%">
 						<template slot-scope="scope">
 							<el-button type="success" @click="look(scope.row.id)">
@@ -60,7 +64,7 @@
 								<el-input v-model="nowEdit.username" autocomplete="off"></el-input>
 							</el-form-item>
 							<el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
-								<el-input placeholder="请输入密码" show-password v-model="nowEdit.password"
+								<el-input placeholder="请输入密码" show-password v-model="nowEdit.password" 
 									autocomplete="off" type="password"></el-input>
 							</el-form-item>
 						</el-form>
@@ -197,6 +201,9 @@
 </script>
 
 <style scoped>
+.el-input__inner{
+	border: none !important;
+}
 	.el-main {
 		padding: 0;
 	}
