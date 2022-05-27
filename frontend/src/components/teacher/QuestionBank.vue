@@ -21,9 +21,15 @@
 					</el-table-column>
 					<el-table-column label="操作" min-width="25%">
 						<template slot-scope="scope">
-							<el-button type="primary" class="edit" @click="handlerEdit(scope.row)">编辑</el-button>
-							<el-button type="success" @click="run(scope.row.id)">查 看</el-button>
-							<el-button type="danger" class="delete" @click.native.prevent="deleteRow(scope.row.id)">删除
+							<el-button type="primary" class="edit" @click="handlerEdit(scope.row)">
+								编 辑
+							</el-button>
+							<el-button type="success" @click="run(scope.row.id)">
+								查 看
+							</el-button>
+							<!-- <el-button type="danger" class="delete" @click.native.prevent="deleteRow(scope.row.id)"> -->
+							<el-button type="danger" class="delete" @click.native.prevent="beforeDelete(scope.row.id)">
+								删 除
 							</el-button>
 						</template>
 					</el-table-column>
@@ -139,15 +145,31 @@
 				}).then((res) => {
 					console.log(res);
 					if (res.data.code == 200) {
-		
-			this.$message.success('添加成功')
+
+						this.$message.success('添加成功')
 						this.getBank()
 					} else {
 						this.$message.error('添加失败')
 					}
 				});
 			},
+			beforeDelete(id) {
+				this.$confirm('此操作将删除该题库, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					this.deleteRow(id);
+				}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消删除'
+					});
+				});
+			},
 			deleteRow(id) {
+
+
 				console.log(id);
 				this.axios
 					.delete(`http://43.142.18.70:9090/QuestionBankDel/${id}`)

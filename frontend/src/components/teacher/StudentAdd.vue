@@ -16,9 +16,15 @@
 					<el-table-column prop="password" label="密码" min-width="20%"> </el-table-column>
 					<el-table-column label="操作" min-width="20%">
 						<template slot-scope="scope">
-							<el-button type="success" @click="look(scope.row.id)">查 看</el-button>
-							<el-button type="primary" class="edit" @click="handlerEdit(scope.row)">编 辑</el-button>
-							<el-button type="danger" class="delete" @click.native.prevent="deleteRow(scope.row.id)">删 除
+							<el-button type="success" @click="look(scope.row.id)">
+								查 看
+							</el-button>
+							<el-button type="primary" class="edit" @click="handlerEdit(scope.row)">
+								编 辑
+							</el-button>
+							<!-- <el-button type="danger" class="delete" @click.native.prevent="deleteRow(scope.row.id)"> -->
+							<el-button type="danger" class="delete" @click.native.prevent="beforeDelete(scope.row.id)">
+								删 除
 							</el-button>
 						</template>
 					</el-table-column>
@@ -150,6 +156,20 @@
 					} else {
 						this.$message.error('添加失败')
 					}
+				});
+			},
+			beforeDelete(id){
+				this.$confirm('此操作将删除该学生信息, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					this.deleteRow(id);
+				}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消删除'
+					});
 				});
 			},
 			deleteRow(id) {
