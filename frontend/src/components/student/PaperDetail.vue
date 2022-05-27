@@ -24,6 +24,31 @@
 				</i>
 			</el-col>
 		</el-row>
+		<!-- 计时器功能开发中 -->
+		<el-row>
+			<div id="jishiqi">
+				    <el-card>
+				        <!-- 倒计时 -->
+				        <div class="count-time">
+				            <span>考试剩余时间：</span>
+				            <span><i class="el-icon-time"></i> {{ `${h}: ${m}: ${s}` }}</span>
+							<!-- <el-button type="primary" @click="countTime">开始答题</el-button> -->
+				        </div>
+				    </el-card>
+				<!-- <p style="font-size: 20px;">
+					<i class="el-icon-time"></i>
+					{{ `${hr}: ${min}: ${sec}` }}
+				</p> -->
+				<!-- <el-button v-show="isshow1" @click="begin()" round type="primary">
+					开始答题
+				</el-button>
+				<el-button v-show="!isshow1" @click="open()" round type="danger">
+					交卷
+				</el-button> -->
+			</div>
+		</el-row>
+		<!-- 计时器功能开发中 -->
+
 		<el-row>
 			<el-card class="paperMain">
 				<el-row>
@@ -73,6 +98,13 @@
 	export default {
 		data() {
 			return {
+				// 计时器功能使用的
+				timer: null,
+				count: '',
+				h: '00',
+				m: '00',
+				s: '00',
+				// 计时器功能使用的
 				temp: [],
 				nowIndex: "",
 				nowId: "",
@@ -98,6 +130,38 @@
 			};
 		},
 		methods: {
+			// 计时器功能使用的
+			countTime () {
+			    // 定义考试时间的秒数，此处根据需要进行定义
+			    // const time = 7200;
+				const time = 10;
+			    if (!this.timer) {
+			        this.count = time;
+			        this.timer = setInterval(() => {
+			            if (this.count > 0 && this.count <= time) {
+			                this.count--;
+			                const h = parseInt((this.count) / (60 * 60));
+			                const m = parseInt((this.count) / 60 % 60);
+			                const s = parseInt((this.count) % 60);
+			                if (this.h === 0 && this.m === 0 && this.s === 0) {
+								this.submit();
+			                    this.$message({
+			                        message: '答题时间结束，将自动交卷！',
+			                        type: 'warning'
+			                    });
+			                } else {
+			                    this.h = h > 9 ? h : '0' + h
+			                    this.m = m > 9 ? m : '0' + m
+			                    this.s = s > 9 ? s : '0' + s
+			                }
+			            } else {
+			                clearInterval(this.timer)
+			                this.timer = null
+			            }
+			        }, 1000)
+			    }
+			},
+			// 计时器功能使用的
 			bottonType(index) {
 				if (this.selectAbout[index].answer !== "") return "primary";
 			},
@@ -137,24 +201,24 @@
 				if (choice == "C") this.selectButton.splice(2, 1, "primary");
 				if (choice == "D") this.selectButton.splice(3, 1, "primary");
 			},
-			beforeSubmit(){
-							this.$confirm('您将结束考试, 是否确定?', '提示', {
-								confirmButtonText: '确定',
-								cancelButtonText: '取消',
-								type: 'warning'
-							}).then(() => {
-								this.submit();
-								 this.$message({
-								            type: 'success',
-								            message: '考试结束!'
-								          });
-							}).catch(() => {
-								this.$message({
-									type: 'info',
-									message: '继续考试'
-								});
-							});
-						},
+			beforeSubmit() {
+				this.$confirm('您将结束考试, 是否确定?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					this.submit();
+					this.$message({
+						type: 'success',
+						message: '考试结束!'
+					});
+				}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '继续考试'
+					});
+				});
+			},
 			submit() {
 				let submit = {
 					allanswer: this.selectAbout,
@@ -218,9 +282,8 @@
 			},
 		},
 		mounted() {
-			this.mountedSet();
-			this.setDefault();
-		},
+				this.countTime();
+		}
 	};
 </script>
 
@@ -284,5 +347,17 @@
 
 	.questionDetail li {
 		margin: 20px 0;
+	}
+
+	#jishiqi {
+		padding: 0;
+		margin: 0;
+		position: relative;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: bold;
+		font-size: 30px;
 	}
 </style>
