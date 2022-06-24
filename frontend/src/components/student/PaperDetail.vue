@@ -255,6 +255,7 @@ export default {
         });
     },
     submit() {
+      let that=this
       let submit = {
         allanswer: this.selectAbout,
         papername: this.$route.query.name,
@@ -269,20 +270,23 @@ export default {
         },
         data: JSON.stringify(submit),
       }).then((res) => {
+        console.log();
         this.$router.push({
           path: "/StudentScore",
           query: {
             score: res.data.data.score,
             total: res.data.data.total,
             exanName: this.$route.query.name,
+            time:that.$route.query.examtime*60-that.count
           },
         });
       });
     },
     mountedSet() {
       this.axios
-        .get(`http://43.142.18.70:9090/QuestionAdd/${this.$route.query.id}`)
+        .get(`http://43.142.18.70:9090/PaperDetail/${this.$route.query.id}`)
         .then((res) => {
+          console.log(res.data);
           for (let i = 0; i < res.data.data.length; i++) {
             this.paper.push({
               id: res.data.data[i].id,

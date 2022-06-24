@@ -44,7 +44,7 @@
 								<el-input v-model="bankAdd.name" autocomplete="off"></el-input>
 							</el-form-item>
 							<el-form-item label="题库详情:" :label-width="formLabelWidth">
-								<el-input v-model="bankAdd.description" autocomplete="off"></el-input>
+								<el-input v-model="bankAdd.description" autocomplete="off" ></el-input>
 							</el-form-item>
 						</el-form>
 						<div slot="footer" class="dialog-footer">

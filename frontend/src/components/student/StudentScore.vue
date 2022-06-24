@@ -30,7 +30,7 @@
 						</tr>
 						<tr>
 							<td>{{StudentScore.name}}</td>
-							<td>{{StudentScore.elapsedTime}}</td>
+							<td>{{StudentScore.elapsedTime}}秒</td>
 						</tr>
 					</table>
 				</div>
@@ -49,7 +49,7 @@
 					name: " 陈益章",
 					examName: "计算机导论",
 					score: undefined,
-					elapsedTime: "66分钟",
+					elapsedTime: '',
 					totalScore:undefined ,
 				},
 			};
@@ -69,6 +69,7 @@
 			this.StudentScore.examName=this.$route.query.examName
 			this.StudentScore.score=this.$route.query.score
 			this.StudentScore.totalScore=this.$route.query.total
+			this.StudentScore.elapsedTime=this.$route.query.time
 		}
 	};
 </script>

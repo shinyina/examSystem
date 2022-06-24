@@ -59,7 +59,7 @@
 				this.axios
 					//.get("http://43.142.18.70:9090/paperScore/${id}")
 					//使用的id为16的进行测试
-					.get("http://43.142.18.70:9090/paperScore/16")
+					.get(`http://43.142.18.70:9090/paperScore/${sessionStorage.getItem('uid')}`)
 					.then((res) => {
 						//console.log(id);
 						console.log(res);
